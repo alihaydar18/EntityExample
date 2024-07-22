@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DbSinavOgrenciModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="gradeTable">
+          <Key>
+            <PropertyRef Name="gradeId" />
+          </Key>
+          <Property Name="gradeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="stdnt" Type="int" />
+          <Property Name="less" Type="int" />
+          <Property Name="exam1" Type="smallint" />
+          <Property Name="exam2" Type="smallint" />
+          <Property Name="exam3" Type="smallint" />
+          <Property Name="average" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="situation" Type="bit" />
+        </EntityType>
+        <EntityType Name="lessonTable">
+          <Key>
+            <PropertyRef Name="lessonId" />
+          </Key>
+          <Property Name="lessonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lessonName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="studentTable">
+          <Key>
+            <PropertyRef Name="ıd" />
+          </Key>
+          <Property Name="ıd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="studentName" Type="varchar" MaxLength="20" />
+          <Property Name="studentSurname" Type="varchar" MaxLength="20" />
+          <Property Name="photograph" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_gradeTable_lessonTable">
+          <End Role="lessonTable" Type="Self.lessonTable" Multiplicity="0..1" />
+          <End Role="gradeTable" Type="Self.gradeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lessonTable">
+              <PropertyRef Name="lessonId" />
+            </Principal>
+            <Dependent Role="gradeTable">
+              <PropertyRef Name="less" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_gradeTable_studentTable">
+          <End Role="studentTable" Type="Self.studentTable" Multiplicity="0..1" />
+          <End Role="gradeTable" Type="Self.gradeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="studentTable">
+              <PropertyRef Name="ıd" />
+            </Principal>
+            <Dependent Role="gradeTable">
+              <PropertyRef Name="stdnt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="NOTLISTESI" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="DbSinavOgrenciModelStoreContainer">
+          <EntitySet Name="gradeTable" EntityType="Self.gradeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lessonTable" EntityType="Self.lessonTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="studentTable" EntityType="Self.studentTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_gradeTable_lessonTable" Association="Self.FK_gradeTable_lessonTable">
+            <End Role="lessonTable" EntitySet="lessonTable" />
+            <End Role="gradeTable" EntitySet="gradeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_gradeTable_studentTable" Association="Self.FK_gradeTable_studentTable">
+            <End Role="studentTable" EntitySet="studentTable" />
+            <End Role="gradeTable" EntitySet="gradeTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbSinavOgrenciModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="gradeTable">
+          <Key>
+            <PropertyRef Name="gradeId" />
+          </Key>
+          <Property Name="gradeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="stdnt" Type="Int32" />
+          <Property Name="less" Type="Int32" />
+          <Property Name="exam1" Type="Int16" />
+          <Property Name="exam2" Type="Int16" />
+          <Property Name="exam3" Type="Int16" />
+          <Property Name="average" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="situation" Type="Boolean" />
+          <NavigationProperty Name="lessonTable" Relationship="Self.FK_gradeTable_lessonTable" FromRole="gradeTable" ToRole="lessonTable" />
+          <NavigationProperty Name="studentTable" Relationship="Self.FK_gradeTable_studentTable" FromRole="gradeTable" ToRole="studentTable" />
+        </EntityType>
+        <EntityType Name="lessonTable">
+          <Key>
+            <PropertyRef Name="lessonId" />
+          </Key>
+          <Property Name="lessonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lessonName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="gradeTable" Relationship="Self.FK_gradeTable_lessonTable" FromRole="lessonTable" ToRole="gradeTable" />
+        </EntityType>
+        <EntityType Name="studentTable">
+          <Key>
+            <PropertyRef Name="ıd" />
+          </Key>
+          <Property Name="ıd" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="studentSurname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="photograph" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="gradeTable" Relationship="Self.FK_gradeTable_studentTable" FromRole="studentTable" ToRole="gradeTable" />
+        </EntityType>
+        <Association Name="FK_gradeTable_lessonTable">
+          <End Role="lessonTable" Type="Self.lessonTable" Multiplicity="0..1" />
+          <End Role="gradeTable" Type="Self.gradeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lessonTable">
+              <PropertyRef Name="lessonId" />
+            </Principal>
+            <Dependent Role="gradeTable">
+              <PropertyRef Name="less" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_gradeTable_studentTable">
+          <End Role="studentTable" Type="Self.studentTable" Multiplicity="0..1" />
+          <End Role="gradeTable" Type="Self.gradeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="studentTable">
+              <PropertyRef Name="ıd" />
+            </Principal>
+            <Dependent Role="gradeTable">
+              <PropertyRef Name="stdnt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbSinavOgrenciEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="gradeTable" EntityType="Self.gradeTable" />
+          <EntitySet Name="lessonTable" EntityType="Self.lessonTable" />
+          <EntitySet Name="studentTable" EntityType="Self.studentTable" />
+          <AssociationSet Name="FK_gradeTable_lessonTable" Association="Self.FK_gradeTable_lessonTable">
+            <End Role="lessonTable" EntitySet="lessonTable" />
+            <End Role="gradeTable" EntitySet="gradeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_gradeTable_studentTable" Association="Self.FK_gradeTable_studentTable">
+            <End Role="studentTable" EntitySet="studentTable" />
+            <End Role="gradeTable" EntitySet="gradeTable" />
+          </AssociationSet>
+          <FunctionImport Name="NOTLISTESI" ReturnType="Collection(DbSinavOgrenciModel.NOTLISTESI_Result)" />
+        </EntityContainer>
+        <ComplexType Name="NOTLISTESI_Result">
+          <Property Type="Int32" Name="GRADEID" Nullable="false" />
+          <Property Type="String" Name="AD_SOYAD" Nullable="true" MaxLength="41" />
+          <Property Type="String" Name="LESSONNAME" Nullable="true" MaxLength="50" />
+          <Property Type="Int16" Name="EXAM1" Nullable="true" />
+          <Property Type="Int16" Name="EXAM2" Nullable="true" />
+          <Property Type="Int16" Name="EXAM3" Nullable="true" />
+          <Property Type="Decimal" Name="AVERAGE" Nullable="true" Precision="5" Scale="2" />
+          <Property Type="Boolean" Name="SİTUATİON" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbSinavOgrenciModelStoreContainer" CdmEntityContainer="DbSinavOgrenciEntities">
+          <EntitySetMapping Name="gradeTable">
+            <EntityTypeMapping TypeName="DbSinavOgrenciModel.gradeTable">
+              <MappingFragment StoreEntitySet="gradeTable">
+                <ScalarProperty Name="gradeId" ColumnName="gradeId" />
+                <ScalarProperty Name="stdnt" ColumnName="stdnt" />
+                <ScalarProperty Name="less" ColumnName="less" />
+                <ScalarProperty Name="exam1" ColumnName="exam1" />
+                <ScalarProperty Name="exam2" ColumnName="exam2" />
+                <ScalarProperty Name="exam3" ColumnName="exam3" />
+                <ScalarProperty Name="average" ColumnName="average" />
+                <ScalarProperty Name="situation" ColumnName="situation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lessonTable">
+            <EntityTypeMapping TypeName="DbSinavOgrenciModel.lessonTable">
+              <MappingFragment StoreEntitySet="lessonTable">
+                <ScalarProperty Name="lessonId" ColumnName="lessonId" />
+                <ScalarProperty Name="lessonName" ColumnName="lessonName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="studentTable">
+            <EntityTypeMapping TypeName="DbSinavOgrenciModel.studentTable">
+              <MappingFragment StoreEntitySet="studentTable">
+                <ScalarProperty Name="ıd" ColumnName="ıd" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+                <ScalarProperty Name="studentSurname" ColumnName="studentSurname" />
+                <ScalarProperty Name="photograph" ColumnName="photograph" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="NOTLISTESI" FunctionName="DbSinavOgrenciModel.Store.NOTLISTESI">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DbSinavOgrenciModel.NOTLISTESI_Result">
+                <ScalarProperty Name="GRADEID" ColumnName="GRADEID" />
+                <ScalarProperty Name="AD_SOYAD" ColumnName="AD SOYAD" />
+                <ScalarProperty Name="LESSONNAME" ColumnName="LESSONNAME" />
+                <ScalarProperty Name="EXAM1" ColumnName="EXAM1" />
+                <ScalarProperty Name="EXAM2" ColumnName="EXAM2" />
+                <ScalarProperty Name="EXAM3" ColumnName="EXAM3" />
+                <ScalarProperty Name="AVERAGE" ColumnName="AVERAGE" />
+                <ScalarProperty Name="SİTUATİON" ColumnName="SİTUATİON" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
